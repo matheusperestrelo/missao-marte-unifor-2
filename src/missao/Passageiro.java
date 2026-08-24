@@ -12,6 +12,9 @@ public class Passageiro {
         this.x = x;
         this.y = y;
     }
+    public int pontuar(){
+        return 0;
+    }
 
     public String getNome() { return nome; }
     public String getTipo() { return tipo; }

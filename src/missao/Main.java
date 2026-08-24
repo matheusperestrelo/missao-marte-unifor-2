@@ -100,8 +100,14 @@ public class Main {
                         } else {
                             boolean ok = missao.embarcarPassageiroNaPosicao();
                             if (ok) {
-                                score += 10;
-                                System.out.println("Passageiro embarcado. +10 pontos!");
+                                score += p.pontuar();
+                                if (p.getTipo() == "Professor"){
+                                    System.out.println("Porfessor = +10 pontos!");
+                                } else if (p.getTipo() == "Astronauta") {
+                                    System.out.println("Astronauta = +20 pontos!");
+                                } else if (p.getTipo() == "Engenheiro") {
+                                    System.out.println("Engenheiro = +15 pontos!");
+                                }
                             } else {
                                 System.out.println("Nave cheia, não foi possível embarcar.");
                             }
@@ -163,10 +169,10 @@ public class Main {
     }
 
     private static Missao criarNovaMissao(Random random, int minX, int maxX, int minY, int maxY) {
-        Nave nave = new Nave("A-1", 3);
+        Nave nave = new Nave("A-1", 4);
         Missao missao = new Missao(nave);
 
-        while (missao.getPassageiros().size() < 3) {
+        while (missao.getPassageiros().size() < 4) {
             int x = random.nextInt(maxX - minX + 1) + minX;
             int y = random.nextInt(maxY - minY + 1) + minY;
             if (x == nave.getX() && y == nave.getY()) continue;
@@ -175,8 +181,10 @@ public class Main {
                 missao.addPassageiro(new Professor("Dr. Silva", x, y));
             } else if (missao.getPassageiros().size() == 1) {
                 missao.addPassageiro(new Engenheiro("Eng. Rosa", x, y));
+            } else if (missao.getPassageiros().size() == 2) {
+                missao.addPassageiro(new Astronauta("Dr. Lima", x, y));
             } else {
-                missao.addPassageiro(new Professor("Dr. Lima", x, y));
+                missao.addPassageiro(new Engenheiro("Dr. Pedro", x, y));
             }
         }
 
@@ -221,14 +229,16 @@ public class Main {
             for (int x = minX; x <= maxX; x++) {
                 char symbol = '.';
                 if (missao.getNave().getX() == x && missao.getNave().getY() == y) {
-                    symbol = 'N';
+                    symbol = '^';
                 } else {
                     for (Passageiro p : missao.getPassageiros()) {
                         if (p.getX() == x && p.getY() == y) {
                             if (p instanceof Engenheiro) {
                                 symbol = 'E';
-                            } else {
+                            } else if (p instanceof Professor){
                                 symbol = 'P';
+                            } else if (p instanceof Astronauta){
+                                symbol = 'X';
                             }
                             break;
                         }
@@ -236,7 +246,7 @@ public class Main {
                     if (symbol == '.') {
                         for (Asteroide a : missao.getAsteroides()) {
                             if (a.getX() == x && a.getY() == y) {
-                                symbol = 'A';
+                                symbol = '@';
                                 break;
                             }
                         }
@@ -247,7 +257,7 @@ public class Main {
             System.out.println();
         }
 
-        System.out.println("Legenda: N=Nave, P=Professor, E=Engenheiro, A=Asteroide, .=Vazio");
+        System.out.println("Legenda: ^=Nave, X=Astronauta, P=Professor, E=Engenheiro, @=Asteroide, .=Vazio");
         System.out.println("Resumo de comandos: w(cima)/s(baixo)/a(esquerda)/d(direita) mover, c embarcar, q sair");
         System.out.println("Passageiros restantes:");
         for (Passageiro p : missao.getPassageiros()) {
