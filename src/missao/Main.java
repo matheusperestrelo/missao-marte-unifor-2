@@ -82,6 +82,7 @@ public class Main {
             boolean running = true;
 
             while (running) {
+                missao.moverInimigos();
                 desenharMapa(missao, minX, maxX, minY, maxY, score, pilotoNome);
                 System.out.printf("Nave em (%d,%d) | Pontos: %d | Passageiros a bordo: %d | Passageiros restantes: %d\n",
                         nave.getX(), nave.getY(), score, nave.getPassageiros().size(), missao.todosEmbarcados() ? 0 : missao.getPassageiros().size());
@@ -92,7 +93,7 @@ public class Main {
                         System.out.println("Game Over!");
                         break;
                     } else {
-                        System.out.println("Bateu em asteroide! Vidas restantes: " + nave.getVidas());
+                        System.out.println("Bateu em asteroide ou inimigo! Vidas restantes: " + nave.getVidas());
                         nave.reposicionar(0, 0);
                     }
                 }
@@ -209,6 +210,14 @@ public class Main {
             missao.addAsteroide(new Asteroide(x, y));
         }
 
+        while (missao.getInimigos().size() < 1) {
+            int x = random.nextInt(maxX - minX + 1) + minX;
+            int y = random.nextInt(maxY - minY + 1) + minY;
+            if (x == nave.getX() && y == nave.getY()) continue;
+            if (posicaoOcupada(missao, x, y)) continue;
+            missao.addInimigo(new Inimigo(x, y));
+        }
+
         return missao;
     }
 
@@ -219,6 +228,9 @@ public class Main {
         }
         for (Asteroide a : missao.getAsteroides()) {
             if (a.getX() == x && a.getY() == y) return true;
+        }
+        for (Inimigo i : missao.getInimigos()) {
+            if (i.getX() == x && i.getY() == y) return true;
         }
         return false;
     }
@@ -264,13 +276,21 @@ public class Main {
                             }
                         }
                     }
+                    if (symbol == '.') {
+                        for (Inimigo i : missao.getInimigos()) {
+                            if (i.getX() == x && i.getY() == y) {
+                                symbol = '!';
+                                break;
+                            }
+                        }
+                    }
                 }
                 System.out.printf(" %2c", symbol);
             }
             System.out.println();
         }
 
-        System.out.println("Legenda: ^=Nave, X=Astronauta, P=Professor, E=Engenheiro, @=Asteroide, .=Vazio");
+        System.out.println("Legenda: ^=Nave, X=Astronauta, P=Professor, E=Engenheiro, @=Asteroide, !=Inimigo, .=Vazio");
         System.out.println("Resumo de comandos: w(cima)/s(baixo)/a(esquerda)/d(direita) mover, c embarcar, q sair");
         System.out.println("Passageiros restantes:");
         for (Passageiro p : missao.getPassageiros()) {

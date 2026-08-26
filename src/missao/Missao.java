@@ -8,6 +8,11 @@ public class Missao {
     private Nave nave;
     private List<Passageiro> passageiros = new ArrayList<>();
     private List<Asteroide> asteroides = new ArrayList<>();
+    private List<Inimigo> inimigos = new ArrayList<>();
+
+    public List<Inimigo> getInimigos() { return inimigos; }
+    public void addInimigo(Inimigo i) { inimigos.add(i); }
+
 
     public Missao(Nave nave) {
         this.nave = nave;
@@ -32,7 +37,16 @@ public class Missao {
         for (Asteroide a : asteroides) {
             if (a.colideCom(nave)) return true;
         }
+        for (Inimigo i : inimigos) {
+            if (i.colideCom(nave)) return true;
+        }
         return false;
+    }
+
+    public void moverInimigos() {
+        for (Inimigo i : inimigos) {
+            i.moverEmDirecaoA((nave));
+        }
     }
 
     public Passageiro passagemNaPosicao() {
