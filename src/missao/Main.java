@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 public class Main {
     public static void main(String[] args) {
         Random random = new Random();
-        int minX = -5;
-        int maxX = 5;
-        int minY = -5;
-        int maxY = 5;
+        // int minX = -5;
+        // int maxX = 5;
+        // int minY = -5;
+        // int maxY = 5;
 
         Path rankingPath = Paths.get("ranking.json");
         List<RankingEntry> ranking = loadRanking(rankingPath);
@@ -69,13 +69,20 @@ public class Main {
 
         boolean playAgain = true;
         while (playAgain) {
+            System.out.print("Tamanho do mapa (-X a +X): ");
+            int tamanho = Integer.parseInt(scanner.nextLine().trim());
+            int minX = -tamanho;
+            int maxX = tamanho;
+            int minY = -tamanho;
+            int maxY = tamanho;
+
             Missao missao = criarNovaMissao(random, minX, maxX, minY, maxY);
             Nave nave = missao.getNave();
             int score = 20;
             boolean running = true;
 
             while (running) {
-                desenharMapa(missao, -5, 5, -5, 5, score, pilotoNome);
+                desenharMapa(missao, minX, maxX, minY, maxY, score, pilotoNome);
                 System.out.printf("Nave em (%d,%d) | Pontos: %d | Passageiros a bordo: %d | Passageiros restantes: %d\n",
                         nave.getX(), nave.getY(), score, nave.getPassageiros().size(), missao.todosEmbarcados() ? 0 : missao.getPassageiros().size());
 
