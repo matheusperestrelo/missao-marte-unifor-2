@@ -80,8 +80,14 @@ public class Main {
                         nave.getX(), nave.getY(), score, nave.getPassageiros().size(), missao.todosEmbarcados() ? 0 : missao.getPassageiros().size());
 
                 if (missao.verificaColisao()) {
-                    System.out.println("Colisão com asteroide! Missão abortada.");
-                    break;
+                    nave.perderVida();
+                    if (nave.getVidas() == 0) {
+                        System.out.println("Game Over!");
+                        break;
+                    } else {
+                        System.out.println("Bateu em asteroide! Vidas restantes: " + nave.getVidas());
+                        nave.reposicionar(0, 0);
+                    }
                 }
 
                 System.out.print("Para onde ir? ");
