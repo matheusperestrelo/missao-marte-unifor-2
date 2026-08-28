@@ -3,6 +3,7 @@ package missao;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 public class Missao {
     private Nave nave;
@@ -43,9 +44,9 @@ public class Missao {
         return false;
     }
 
-    public void moverInimigos() {
+    public void moverInimigos(Random r, int minX, int maxX, int minY, int maxY) {
         for (Inimigo i : inimigos) {
-            i.moverEmDirecaoA((nave));
+            i.moverAleatorio(r, minX, maxX, minY, maxY);
         }
     }
 
