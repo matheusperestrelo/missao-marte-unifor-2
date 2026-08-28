@@ -366,13 +366,16 @@ public class Main {
                             }
                         }
                     }
+                    if (symbol == '.' && x == 0 && y == 0) {
+                        symbol = 'L';
+                    }
                 }
                 System.out.printf(" %2c", symbol);
             }
             System.out.println();
         }
 
-        System.out.println("Legenda: ^=Nave, X=Astronauta, P=Professor, E=Engenheiro, @=Asteroide, !=Inimigo, .=Vazio");
+        System.out.println("Legenda: ^=Nave, X=Astronauta, P=Professor, E=Engenheiro, @=Asteroide, !=Inimigo, L=Plataforma de Pouso, .=Vazio");
         System.out.println("Resumo de comandos: w(cima)/s(baixo)/a(esquerda)/d(direita) mover, c embarcar, q sair");
         System.out.println("Passageiros restantes:");
         for (Passageiro p : missao.getPassageiros()) {
