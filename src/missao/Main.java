@@ -82,7 +82,7 @@ public class Main {
             
             try {
                 tamanho = Integer.parseInt(scanner.nextLine().trim());
-                if (tamanho <= 0) tamanho = 5;
+                if (tamanho <= 1) tamanho = 5;
             } catch (NumberFormatException e) {
                 System.out.println("Entrada inválida. Usando mapa padrão (5).");
                 tamanho = 5;
