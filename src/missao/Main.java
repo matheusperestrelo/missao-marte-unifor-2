@@ -202,14 +202,14 @@ public class Main {
     private static Dificuldade lerDificuldade(Scanner scanner) {
         System.out.println("Escolha a dificuldade:");
         System.out.println("1. Fácil (5 asteroides, 30 pontos iniciais, 5 passageiros)");
-        System.out.println("2. Normal (3 asteroides, 20 pontos iniciais, 3 passageiros)");
+        System.out.println("2. Médio (3 asteroides, 20 pontos iniciais, 3 passageiros)");
         System.out.println("3. Difícil (6 asteroides, 15 pontos iniciais, 4 passageiros)");
         System.out.print("Opção: ");
         String opcao = scanner.nextLine().trim();
         switch (opcao) {
             case "1": return Dificuldade.FACIL;
             case "3": return Dificuldade.DIFICIL;
-            default: return Dificuldade.NORMAL;
+            default: return Dificuldade.MEDIO;
         }
     }
 
@@ -452,7 +452,7 @@ public class Main {
             String object = json.substring(start + 1, end);
             String name = null;
             Integer score = null;
-            String dificuldade = "NORMAL";
+            String dificuldade = "MEDIO";
             int passageirosColetados = 0;
             String dataHora = "";
             long tempoJogo = 0;

@@ -2,7 +2,7 @@ package missao;
 
 public enum Dificuldade {
     FACIL(5, 30, 5, 1),
-    NORMAL(3, 20, 3, 2),
+    MEDIO(3, 20, 3, 2),
     DIFICIL(6, 15, 4, 3);
 
     private final int qtdAsteroides;
